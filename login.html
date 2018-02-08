@@ -1,6 +1,8 @@
 <html>
     <head>
+        <meta charset="utf-8">
         <title>OAuth2 Demo Login</title>
+        <meta charset="utf-8">
         <style>
          /* Brutalist style CSS */
          body { display: block;
@@ -26,7 +28,7 @@
          code,pre {
              background-color: #eee8d5;
          }
-        pre { padding: 1em; border: solid 2px; font-size: 0.7em; }
+        pre { padding: 1em; border: solid 2px; font-size: 0.7em; box-shadow: 8px 8px 0; }
 
          .button { display: inline-block;
              border: solid 2px;
@@ -68,6 +70,7 @@
         </script>
         <h1>Yolo App login page</h1>
         <p>Authorization process done!</p>
+        <a href="/index.html">← go back to main page</a>
         <p>the returned code is:</p>
         <pre class="code"><script>document.write(params.code);</script></pre>
     </body>
