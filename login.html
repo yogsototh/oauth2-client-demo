@@ -7,20 +7,30 @@
     <body>
         <script>
          function getJsonFromUrl() {
-            var query = location.search.substr(1);
-            var result = {};
-            query.split("&").forEach(function(part) {
-            var item = part.split("=");
-            result[item[0]] = decodeURIComponent(item[1]);
-            });
-            return result;
-            }
-       var params=getJsonFromUrl()
+             var query = location.search.substr(1);
+             var result = {};
+             query.split("&").forEach(function(part) {
+                 var item = part.split("=");
+                 result[item[0]] = decodeURIComponent(item[1]);
+             });
+             return result;
+         }
+         var params=getJsonFromUrl();
+         function jwtDecode(t) {
+             let token = {};
+             token.raw = t;
+             token.header = JSON.parse(window.atob(t.split('.')[0]));
+             token.payload = JSON.parse(window.atob(t.split('.')[1]));
+             return (token)
+         }
+         var jwt=jwtDecode(params.code).payload;
         </script>
         <h1>Yolo App login page</h1>
         <p>Authorization process done!</p>
         <a href="/index.html">← go back to main page</a>
-        <p>the returned code is:</p>
+        <p>the returned jwt is:</p>
+        <pre class="code"><script>document.write(JSON.stringify(jwt,null,2));</script></pre>
+        <p>decoded from the code:</p>
         <pre class="code"><script>document.write(params.code);</script></pre>
     </body>
 </html>

@@ -13,7 +13,7 @@ body {
     display: block;
     color: #586e75;
     margin: 2em auto 0;
-    max-width: 30em;
+    max-width: 45em;
     font-family: Consolas, Menlo, monospace;
     line-height: 1.2em;
     font-size: 18px;
@@ -50,6 +50,7 @@ pre { padding: 1em;
 .button:hover {
     cursor: pointer;
     color: #FFF;
+    background-color: #268bd2;
     box-shadow: 4px 4px 0 #000;
     border-color: #000; }
 
