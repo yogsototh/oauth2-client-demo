@@ -1,0 +1,14 @@
+#+Title: OAuth2 Client Demo
+#+Author: Yann Esposito
+
+Brutalist OAuth2 client demo.
+
+Brutalist because the design is brutalist and the site is static, no server side code.
+
+You can serve it with your preferred local file server.
+
+
+#+BEGIN_SRC
+python -m SimpleHTTPServer 9999
+#+END_SRC
+
