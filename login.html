@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <title>OAuth2 Demo Login</title>
+        <style>
+         /* Brutalist style CSS */
+         body { display: block;
+             color: #586e75;
+             margin: 2em auto 0;
+             max-width: 30em;
+             font-family: Consolas, Menlo, monospace;
+             line-height: 1.2em;
+             font-size: 18px;
+             background-color: #fdf6e3;
+         }
+         strong { color: #657b83; }
+         a { color: #268bd2;
+         }
+         a:visited { color: #6c71c4;  }
+         a:hover { color: #cb4b16; }
+         a:active { color: #dc322f; }
+         a > code {
+             border: solid 2px;
+             box-shadow: 4px 4px;
+             padding: 5px;
+         }
+         code,pre {
+             background-color: #eee8d5;
+         }
+        pre { padding: 1em; border: solid 2px; font-size: 0.7em; }
+
+         .button { display: inline-block;
+             border: solid 2px;
+             box-shadow: 4px 4px 0;
+             font-size: 22px;
+             font-weight: bold;
+             padding: 5px;
+            background-color: #eee8d5;
+            }
+         .button:hover { cursor: pointer;
+             color: #FFF;
+             box-shadow: 4px 4px 0 #000;
+             border-color: #000;
+         }
+         .button:active { box-shadow: 0 0; top: 4px; left: 4px; position: relative; }
+         .button.ok-button:hover { background-color: #859900;}
+         .button.deny-button:hover { background-color: #dc322f;}
+         .client-name { border-bottom: solid 4px #444;
+             padding: 2px;
+         display: inline-block;}
+         .redirect-uri { display: block;
+             margin: 2em 0;
+         }
+         .code { word-wrap: break-word; }
+        </style>
+    </head>
+    <body>
+        <script>
+         function getJsonFromUrl() {
+            var query = location.search.substr(1);
+            var result = {};
+            query.split("&").forEach(function(part) {
+            var item = part.split("=");
+            result[item[0]] = decodeURIComponent(item[1]);
+            });
+            return result;
+            }
+       var params=getJsonFromUrl()
+        </script>
+        <h1>Yolo App login page</h1>
+        <p>Authorization process done!</p>
+        <p>the returned code is:</p>
+        <pre class="code"><script>document.write(params.code);</script></pre>
+    </body>
+</html>
