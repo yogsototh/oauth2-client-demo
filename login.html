@@ -29,12 +29,12 @@
         <h1>Yolo App login page</h1>
         <p>Authorization process done!</p>
         <a href="/index.html">← go back to main page</a>
-        <p>the returned jwt is:</p>
-        <pre class="code"><script>document.write(JSON.stringify(jwt,null,2));</script></pre>
-        <p>decoded from the code:</p>
-        <pre class="code"><script>document.write(params.code);</script></pre>
-        <p>Retrieving Tokens</p>
+        <h2>Tokens</h2>
         <pre id="token" class="code">Retrive tokens...</pre>
+        <h2>Decoded Code:</h2>
+        <pre class="code"><script>document.write(JSON.stringify(jwt,null,2));</script></pre>
+        <h2>decoded from the code:</h2>
+        <pre class="code"><script>document.write(params.code);</script></pre>
         <script>
          var tokparams={
              "code":params.code
@@ -43,10 +43,19 @@
              , "client_id":"localtest"
              , "grant_type":"authorization_code"
          };
+         var onTokenError = function(jqXHR,textStatus,errorThrown){
+             $('#token').html(errorThrown + " status: " + jqXHR.status
+                            + "\n---\n"
+                            + JSON.stringify(jqXHR.responseJSON,null,2))}
+         var onTokenSuccess = function(data,textStatus,jqXHR) {
+             $("#token").html(data
+                            + "\n---\n"
+                            + JSON.stringify(jqXHR.responseJSON,null,2));}
          $.ajax({
              type: "POST"
              , beforeSend: function(request) {request.setRequestHeader("Authorization","Basic localpass")}
-             , success: function(data){$("#token").html(data);}
+             , success: onTokenSuccess
+             , error: onTokenError
              , url: "http://localhost:9001/iroh/oauth2/token"
              , data: tokparams
              , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
