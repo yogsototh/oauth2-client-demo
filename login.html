@@ -43,8 +43,15 @@
              , "client_id":"localtest"
              , "grant_type":"authorization_code"
          };
-         $.ajax("http://localhost:9001/iroh/oauth2/token"+$.param(tokparams)
-              , function(data){$("#token").html(data);});
+         $.ajax({
+             type: "POST"
+             , beforeSend: function(request) {request.setRequestHeader("Authorization","Basic localpass")}
+             , success: function(data){$("#token").html(data);}
+             , url: "http://localhost:9001/iroh/oauth2/token"
+             , data: tokparams
+             , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+             , crossDomain: true
+         });
         </script>
     </body>
 </html>
