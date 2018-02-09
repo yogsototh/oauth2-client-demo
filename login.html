@@ -3,6 +3,7 @@
         <meta charset="utf-8">
         <title>OAuth2 Demo Login</title>
         <link rel="stylesheet" href="brutalist.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
         <script>
@@ -32,5 +33,18 @@
         <pre class="code"><script>document.write(JSON.stringify(jwt,null,2));</script></pre>
         <p>decoded from the code:</p>
         <pre class="code"><script>document.write(params.code);</script></pre>
+        <p>Retrieving Tokens</p>
+        <pre id="token" class="code">Retrive tokens...</pre>
+        <script>
+         var tokparams={
+             "code":params.code
+             , "redirect_uri":"http://localhost:9999/login.html"
+             , "scope":"ctia iroh-collect"
+             , "client_id":"localtest"
+             , "grant_type":"authorization_code"
+         };
+         $.ajax("http://localhost:9001/iroh/oauth2/token"+$.param(tokparams)
+              , function(data){$("#token").html(data);});
+        </script>
     </body>
 </html>
