@@ -55,9 +55,6 @@ pre { padding: 1em;
     border-color: #000; }
 
 .button:active {
-    box-shadow: 0 0;
-    top: 4px;
-    left: 4px;
     position: relative; }
 
 .button.ok-button:hover {
