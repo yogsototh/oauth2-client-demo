@@ -4,12 +4,24 @@
         <link rel="stylesheet" href="brutalist.css" />
     </head>
     <body>
-        <h1>Yolo App</h1>
+        <h1>OAuth2 Client Demo App</h1>
+
+        <p>The only thing needed to ask an user to grants the Yolo app
+            access to Visibility is just putting a simple link:</p>
+        <p>Here the button is a link to:</p>
+        <pre>http://localhost:9001/iroh/oauth2/authorize?
+                response_type=code
+                &client_id=localtest
+                &redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Flogin.html
+                &scope=ctia%20ui-settings
+                &state=whatever</pre>
+
         <a class="button"
-           href="http://localhost:9001/iroh/oauth2/authorize?response_type=code&client_id=localtest&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Flogin.html&scope=ctia%20iroh-collect&state=yolo"
+           href="http://localhost:9001/iroh/oauth2/authorize?response_type=code&client_id=localtest&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Flogin.html&scope=ctia%20ui-settings&state=whatever"
         >click Here</a> to authorize me with the scopes:
+
         <ul><li><code>ctia</code></li>
-            <li><code>iroh-collect</code></li>
+            <li><code>ui-settings</code></li>
         </ul>
     </body>
 </html>
