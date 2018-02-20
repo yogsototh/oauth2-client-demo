@@ -64,3 +64,9 @@ pre { padding: 1em;
 
 .code {
     word-wrap: break-word; }
+
+.refused {color: #dc322f;
+           border: solid 8px; }
+
+.authorized {color: #859900;
+             border: solid 8px; }
