@@ -63,7 +63,8 @@ pre { padding: 1em;
     background-color: #dc322f;}
 
 .code {
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    white-space: pre-wrap; }
 
 .refused {color: #dc322f;
            border: solid 8px; }
