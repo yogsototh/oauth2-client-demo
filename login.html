@@ -13,6 +13,7 @@
         <a href="/index.html">← go back to main page</a>
         <h2>Authorization Status</h2>
         <pre class="code" id="authorization_status"></pre>
+        <div id="error-info"></div>
         <h3>State</h3>
         The process should also return the state provided.
         <pre class="code" id="state-param"></pre>
@@ -81,6 +82,10 @@
          }
          $('#authorization_status').html( authstatus );
          $('#state-param').html(params.state);
+         if (params.error_uri) {
+             var erroruri=decodeURIComponent(params.error_uri);
+             $('#error-info').html("<p>You can have more informations here:</p><a href=\"" + erroruri + "\" target=\"_blank\">" + erroruri + "</a>");
+         }
 
          function jwtDecode(t) {
              let token = {};
