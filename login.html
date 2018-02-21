@@ -78,10 +78,16 @@
          if (params.error) {
              authstatus = "REFUSED: " + params.error;
              $('#authorization_status').addClass('refused');
-            $('#oncode').hide();
+             $('#oncode').hide();
          } else {
-             authstatus = "AUTHORIZED" ;
-             $('#authorization_status').addClass('authorized');
+             if (params.code) {
+                 authstatus = "AUTHORIZED" ;
+                 $('#authorization_status').addClass('authorized');
+             } else {
+                 authstatus = "UNKNOWN" ;
+                 $('#oncode').hide();
+                 $('#state-param').html("No state");
+             }
          }
          $('#authorization_status').html( authstatus );
          $('#state-param').html(params.state);
