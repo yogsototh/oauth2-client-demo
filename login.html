@@ -64,6 +64,11 @@
             <pre id="refreshed-access-token" class="code">Nothing yet.</pre>
         </div>
         <script>
+         /* Client conf */
+         var client_id = "localtest";
+         var client_password = "localpass";
+         var req_scope="ctia iroh-collect";
+         /* ----- */
          function getJsonFromUrl() {
              var query = location.search.substr(1);
              var result = {};
@@ -112,8 +117,8 @@
              var tokparams={
                  "code":params.code
                  , "redirect_uri":"http://localhost:9999/login.html"
-                 , "scope":"ctia ui-settings"
-                 , "client_id":"localtest"
+                 , "scope":req_scope
+                 , "client_id":client_id
                  , "grant_type":"authorization_code"
              };
              var onError = function(jqXHR,textStatus,errorThrown){
@@ -131,7 +136,7 @@
              }
              $.ajax({
                  type: "POST"
-                 , beforeSend: function(request) {request.setRequestHeader("Authorization","Basic localpass")}
+                 , beforeSend: function(request) {request.setRequestHeader("Authorization","Basic " + btoa(client_id + ":" + client_password))}
                  , success: onSuccess
                  , error: onError
                  , url: "http://localhost:9001/iroh/oauth2/token"
@@ -143,8 +148,8 @@
          var getAccessToken = function() {
              var tokparams={
                  "refresh_token":refreshToken
-                 , "scope":"ctia iroh-collect"
-                 , "client_id":"localtest"
+                 , "scope":req_scope
+                 , "client_id":client_id
                  , "grant_type":"refresh_token"
              };
              var onError = function(jqXHR,textStatus,errorThrown){
@@ -159,7 +164,7 @@
              }
              $.ajax({
                  type: "POST"
-                 , beforeSend: function(request) {request.setRequestHeader("Authorization","Basic localpass")}
+                 , beforeSend: function(request) {request.setRequestHeader("Authorization","Basic " + btoa(client_id + ":" + client_password))}
                  , success: onSuccess
                  , error: onError
                  , url: "http://localhost:9001/iroh/oauth2/token"
