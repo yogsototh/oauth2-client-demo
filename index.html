@@ -2,6 +2,18 @@
     <head>
         <title>Authorize an App</title>
         <link rel="stylesheet" href="brutalist.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="./infos.js"></script>
+        <script>
+         var displayAuthUrl=oauthServerUrl + "?\n\t"
+                   + "response_type=" + encodeURIComponent(response_type) + "\n\t"
+                   + "&client_id=" + encodeURIComponent(client_id) + "\n\t"
+                   + "&redirect_uri=" + encodeURIComponent(redirect_uri) + "\n\t"
+                   + "&scope=" + encodeURIComponent(scope) + "\n\t"
+                   + "&state=" + encodeURIComponent(state);
+
+         var authUrl=displayAuthUrl.replace("\n","");
+        </script>
     </head>
     <body>
         <h1>OAuth2 Client Demo App</h1>
@@ -9,19 +21,20 @@
         <p>The only thing needed to ask an user to grants the Yolo app
             access to Visibility is just putting a simple link:</p>
         <p>Here the button is a link to:</p>
-        <pre>http://localhost:9001/iroh/oauth2/authorize?
-                response_type=code
-                &client_id=localtest
-                &redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Flogin.html
-                &scope=ctia%20ui-settings
-                &state=whatever</pre>
+        <pre id="displayUrlPre"></pre>
 
-        <a class="button"
-           href="http://localhost:9001/iroh/oauth2/authorize?response_type=code&client_id=localtest&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Flogin.html&scope=ctia%20ui-settings&state=whatever"
-        >click Here</a> to authorize me with the scopes:
+        <a id="authURLLink" href="#">click Here</a>
+        to authorize me with the <strong>scopes</strong>:
 
-        <ul><li><code>ctia</code></li>
-            <li><code>ui-settings</code></li>
-        </ul>
+        <ul id="scopes"></ul>
+        <script>
+         $.when( $.ready ).then(function () {
+             $("#displayUrlPre").html(displayAuthUrl);
+             $("#authURLLink").attr("href",displayAuthUrl);
+             $.each(scopes,function(i,scope){
+                 $("#scopes").append("<li>"+scope+"</li>\n");
+             })
+         });
+        </script>
     </body>
 </html>
