@@ -1,17 +1,10 @@
-var oauthServerUrl="http://localhost:9001/iroh/oauth2/authorize";
+var oauthServerUrl="https://visibility.amp.cisco.com/iroh/oauth2/authorize";
+var oauthServerTokenUrl="https://visibility.amp.cisco.com/iroh/oauth2/token";
+var resourceProviderTestEndpoint="https://private.intel.amp.cisco.com:443/ctia/judgement/judgement-000013f9-4d39-427e-8bbc-bf987a5d867b";
 var response_type="code";
-var client_id="localtest";
-var client_password = "localpass";
-var redirect_uri="http://localhost:9999/login.html";
-var scopes=["casebook"
-            ,"collect"
-            ,"global-intel"
-            ,"private-intel"
-            ,"enrich"
-            ,"inspect"
-            ,"integration"
-            ,"iroh-auth"
-            ,"response"
-            ,"ui-settings"];
+var client_id="client-id";
+var client_password = "password";
+var redirect_uri="http://localhost:9988/login.html";
+var scopes=["ctia"];
 var scope=scopes.join(" ");
 var state="whatever";

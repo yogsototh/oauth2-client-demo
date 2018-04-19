@@ -48,6 +48,7 @@
                  onclick="makeApiCall();">
                 Make an API call with the access token
             </div>
+            <pre id="apiurl" class="code">Nothing yet.</pre>
             <pre id="apiresponse" class="code">Nothing yet.</pre>
             <h2>Getting new access token without user interaction</h2>
             <p> The access tokens are the only tokens which are able to talk to the
@@ -113,7 +114,7 @@
          var getTokensFromCode = function() {
              var tokparams={
                  "code":params.code
-                 , "redirect_uri":"http://localhost:9999/login.html"
+                 , "redirect_uri":redirect_uri
                  , "scope":scope
                  , "client_id":client_id
                  , "grant_type":"authorization_code"
@@ -136,7 +137,7 @@
                  , beforeSend: function(request) {request.setRequestHeader("Authorization","Basic " + btoa(client_id + ":" + client_password))}
                  , success: onSuccess
                  , error: onError
-                 , url: "http://localhost:9001/iroh/oauth2/token"
+                 , url: oauthServerTokenUrl
                  , data: tokparams
                  , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
                  , crossDomain: true
@@ -164,7 +165,7 @@
                  , beforeSend: function(request) {request.setRequestHeader("Authorization","Basic " + btoa(client_id + ":" + client_password))}
                  , success: onSuccess
                  , error: onError
-                 , url: "http://localhost:9001/iroh/oauth2/token"
+                 , url: oauthServerTokenUrl
                  , data: tokparams
                  , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
                  , crossDomain: true
@@ -184,7 +185,7 @@
                  , beforeSend: function(request) {request.setRequestHeader("Authorization","Bearer " + accessToken)}
                  , success: onSuccess
                  , error: onError
-                 , url: "http://localhost:9001/iroh/iroh-ui-settings/whoami"
+                 , url: resourceProviderTestEndpoint
                  , contentType: 'application/json'
                  , crossDomain: true
              });
