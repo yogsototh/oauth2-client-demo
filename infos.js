@@ -1,10 +1,14 @@
-var oauthServerUrl="https://visibility.amp.cisco.com/iroh/oauth2/authorize";
-var oauthServerTokenUrl="https://visibility.amp.cisco.com/iroh/oauth2/token";
-var resourceProviderTestEndpoint="https://private.intel.amp.cisco.com:443/ctia/judgement/judgement-000013f9-4d39-427e-8bbc-bf987a5d867b";
+var oauthURLPrefix="http://localhost:9001";
+var oauthServerUrl=oauthURLPrefix + "/iroh/oauth2/authorize";
+var oauthServerTokenUrl=oauthURLPrefix + "/iroh/oauth2/token";
+var resourceProviderTestEndpoint=oauthURLPrefix + "/iroh/iroh-ui-settings/whoami" ;
 var response_type="code";
-var client_id="client-id";
-var client_password = "password";
-var redirect_uri="http://localhost:9988/login.html";
-var scopes=["ctia"];
+var client_id="localtest";
+var client_password = "localpass";
+var redirect_uri="http://localhost:9999/login.html";
+var scopes=[ "private-intel"
+           , "ui-settings"
+           , "inexistant"
+           ];
 var scope=scopes.join(" ");
 var state="whatever";

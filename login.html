@@ -80,6 +80,12 @@
          var authstatus="";
          if (params.error) {
              authstatus = "REFUSED: " + params.error;
+             if (params.error_description) {
+                 authstatus += "\n\n" + params.error_description;
+             }
+             if (params.error_uri) {
+                 authstatus += "<a href='" + params.error_uri + "'>" + params.error_uri + "</a>";
+             }
              $('#authorization_status').addClass('refused');
              $('#oncode').hide();
          } else {
