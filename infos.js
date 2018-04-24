@@ -8,7 +8,7 @@ var client_password = "localpass";
 var redirect_uri="http://localhost:9999/login.html";
 var scopes=[ "private-intel"
            , "ui-settings"
-           , "inexistant"
+           //  , inexistant
            ];
 var scope=scopes.join(" ");
 var state="whatever";
