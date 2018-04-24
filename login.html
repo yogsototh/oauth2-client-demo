@@ -38,6 +38,7 @@
                 Get Access &amp; Refresh Tokens from Code
             </div>
             <h3>Response from <code>/token</code></h3>
+            <p>token endpoint URL: <code id="urltoken" class="code">Nothing yet.</code></p>
             <pre id="token" class="code">Nothing yet.</pre>
             <h3>decoded access-token</h3>
             <pre id="access-token" class="code">Nothing yet.</pre>
@@ -48,7 +49,7 @@
                  onclick="makeApiCall();">
                 Make an API call with the access token
             </div>
-            <pre id="apiurl" class="code">Nothing yet.</pre>
+            <p>API URL: <code id="apiurl" class="code">Nothing yet.</code></p>
             <pre id="apiresponse" class="code">Nothing yet.</pre>
             <h2>Getting new access token without user interaction</h2>
             <p> The access tokens are the only tokens which are able to talk to the
@@ -98,6 +99,8 @@
                  $('#state-param').html("No state");
              }
          }
+         $('#urltoken').html( oauthServerTokenUrl );
+         $('#apiurl').html( resourceProviderTestEndpoint );
          $('#authorization_status').html( authstatus );
          $('#state-param').html(params.state);
          if (params.error_uri) {
