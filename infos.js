@@ -5,7 +5,7 @@ var resourceProviderTestEndpoint=oauthURLPrefix + "/iroh/iroh-ui-settings/whoami
 var response_type="code";
 var client_id="localtest";
 var client_password = "localpass";
-var redirect_uri="http://localhost:9999/login.html";
+var redirect_uri="http://localhost:9999/code.html";
 var scopes=[ "private-intel"
            , "ui-settings"
            //  , inexistant
