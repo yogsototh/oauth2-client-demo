@@ -12,3 +12,6 @@ You can serve it with your preferred local file server.
 python -m SimpleHTTPServer 9999
 #+END_SRC
 
+
+Generate self certificate
+
