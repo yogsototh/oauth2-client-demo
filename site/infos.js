@@ -1,11 +1,11 @@
-var oauthURLPrefix="https://visibility.amp.cisco.com";
+var oauthURLPrefix="https://visibility.int.iroh.site";
 var oauthServerUrl=oauthURLPrefix + "/iroh/oauth2/authorize";
 var oauthServerTokenUrl=oauthURLPrefix + "/iroh/oauth2/token";
 var resourceProviderTestEndpoint=oauthURLPrefix + "/iroh/profile/whoami" ;
 var response_type="code";
-var client_id="client-3bb1e787-381d-4f12-bf32-e1158f200ddc";
-var client_password = "CrXwg31_vnRHpjPXzgVzUFKHr6RO8GTL-iI8aDeUU3n48NtD7PFLhg";
-var redirect_uri="https://localhost:5443/callback.html";
-var scopes=[ "profile", "inspect" ];
+var client_id="client-92258bc0-196a-4f6c-a0b5-fe105de5f505";
+var client_password = "xoM2Gisjqp7Sp1jnw9Y6Yce9gfg4hmoRxZTekLqKi6i7o1xBiPvLvA";
+var redirect_uri="https://localhost:5443/callback";
+var scopes=[ "openid" ];
 var scope=scopes.join(" ");
 var state="whatever=";
