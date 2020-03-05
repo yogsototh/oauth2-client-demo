@@ -16,4 +16,12 @@ python server.py
 
 Modify `scripts/get_refresh_token` to retrieve a refresh/access token from the CTR API. 
 
+```bash
+    ./scripts/get_refresh_token.sh CLIENT_ID CLIENT_SECRET
+```
+
 Modify `scripts/test_access_token` to use your access token to query the CTR API.
+
+```bash
+    ./scripts/test_access_token.sh ACCESS_TOKEN
+```
