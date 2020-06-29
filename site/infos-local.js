@@ -1,0 +1,11 @@
+var oauthURLPrefix="http://localhost:9001";
+var oauthServerUrl=oauthURLPrefix + "/iroh/oauth2/authorize";
+var oauthServerTokenUrl=oauthURLPrefix + "/iroh/oauth2/token";
+var resourceProviderTestEndpoint=oauthURLPrefix + "/iroh/profile/whoami" ;
+var response_type="code";
+var client_id="localtest";
+var client_password = "localpass";
+var redirect_uri="http://localhost:9999/callback.html";
+var scopes=[ "openid", "profile" ];
+var scope=scopes.join(" ");
+var state="whatever=";

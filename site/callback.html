@@ -40,6 +40,8 @@
             <h3>Response from <code>/token</code></h3>
             <p>token endpoint URL: <code id="urltoken" class="code">Nothing yet.</code></p>
             <pre id="token" class="code">Nothing yet.</pre>
+            <h3>decoded id_token</h3>
+            <pre id="id_token" class="code">Nothing yet.</pre>
             <h3>decoded access-token</h3>
             <pre id="access-token" class="code">Nothing yet.</pre>
             <h3>decoded refresh-token</h3>
@@ -136,6 +138,7 @@
                  $("#token").html(data
                                 + "\n---\n"
                                 + JSON.stringify(jqXHR.responseJSON,null,2));
+                 $("#id_token").html( JSON.stringify(jwtDecode(jqXHR.responseJSON.id_token).payload,null,2) );
                  $("#access-token").html( JSON.stringify(jwtDecode(jqXHR.responseJSON.access_token).payload,null,2) );
                  $("#refresh-token").html( JSON.stringify(jwtDecode(jqXHR.responseJSON.refresh_token).payload,null,2) );
                  accessToken=jqXHR.responseJSON.access_token;
