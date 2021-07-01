@@ -35,7 +35,7 @@ echo "Would you like to connect your SecureX account?"
 # FOR DEMO
 read answer
 case $answer in
-  n|N|no|NO) echo "I can do nothing else..."; sleep 1; echo "Guess I die now..."; echo; exit 0;;
+  n|N|no|NO) echo "I can do nothing else..."; sleep 1; echo "Guess I die now..."; echo "¯\\_(ツ)_/¯"; echo; exit 0;;
 esac
 
 da_response="$(http --form POST "$SX/iroh/oauth2/device_authorization" \
@@ -88,16 +88,22 @@ poll () {
       access_token="$( echo $pollresp|jq '.access_token' | sed 's/"//g')"
       if [[ "$error" == "authorization_pending" ]]; then
           case $i in
-              0) echo "Hmmm I'm waiting....";;
-              1) echo "Hurry up mate!";;
-              2) echo "Seriously, what more do you need?";;
-              3) echo "You are making everything to make me loose my temper, aren't you?";;
-              4) echo "OK I can wait";;
-              5) echo "Ah ha, you think I care?";;
-              6) echo "No seriously! Why are you doing this to me?";;
-              7) echo "Please!!!! I beg you!! ENTER THE CODE!!! Free me!";;
-              8) echo "I see, you really don't care about my feelings...";;
-              9) echo "I don't care, I can wait, a lot longer than you.";;
+               1)  echo "Enter that code will you? I don't have all day..."
+               2)  echo "Hey, that should be easy, a baby can do it!"
+               3)  echo "How much help do you need? ENTER THE CODE: $user_code"
+               4)  echo "I'm still waiting, having an issue with your browser?"
+               5)  echo "Have you ever used a computer before?"
+               6)  echo "I guess you forgot to install DUO..."
+               7)  echo "I'm waiting for you....";;
+               8)  echo "Hurry up mate!";;
+               9)  echo "Seriously, what more do you need?";;
+               10) echo "You are making everything to make me loose my temper, aren't you?";;
+               11) echo "OK I can wait";;
+               12) echo "Ah ha, you think I care?";;
+               13) echo "No seriously! Why are you doing this to me?";;
+               14) echo "Please!!!! I beg you!! ENTER THE CODE!!! Free me!";;
+               15) echo "I see, you really don't care about my feelings...";;
+               16) echo "I don't care, I can wait, a lot longer than you.";;
               *) echo "I guess it shoud not take care you much longer now..."
           esac
       else
