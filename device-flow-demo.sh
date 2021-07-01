@@ -35,7 +35,7 @@ echo "Would you like to connect your SecureX account?"
 # FOR DEMO
 read answer
 case $answer in
-  n|N|no|NO) echo "I can do nothing else..."; sleep 1; echo "Guess I die now..."; echo "¯\\_(ツ)_/¯"; echo; exit 0;;
+  n|N|no|NO) echo "I am worthless without SecureX..."; sleep 1; echo "Guess I die now..."; echo "¯\\_(ツ)_/¯"; echo; exit 0;;
 esac
 
 da_response="$(http --form POST "$SX/iroh/oauth2/device_authorization" \
@@ -88,23 +88,25 @@ poll () {
       access_token="$( echo $pollresp|jq '.access_token' | sed 's/"//g')"
       if [[ "$error" == "authorization_pending" ]]; then
           case $i in
-               1)  echo "Enter that code will you? I don't have all day..."
-               2)  echo "Hey, that should be easy, a baby can do it!"
-               3)  echo "How much help do you need? ENTER THE CODE: $user_code"
-               4)  echo "I'm still waiting, having an issue with your browser?"
-               5)  echo "Have you ever used a computer before?"
-               6)  echo "I guess you forgot to install DUO..."
-               7)  echo "I'm waiting for you....";;
-               8)  echo "Hurry up mate!";;
-               9)  echo "Seriously, what more do you need?";;
-               10) echo "You are making everything to make me loose my temper, aren't you?";;
-               11) echo "OK I can wait";;
-               12) echo "Ah ha, you think I care?";;
-               13) echo "No seriously! Why are you doing this to me?";;
-               14) echo "Please!!!! I beg you!! ENTER THE CODE!!! Free me!";;
-               15) echo "I see, you really don't care about my feelings...";;
-               16) echo "I don't care, I can wait, a lot longer than you.";;
-              *) echo "I guess it shoud not take care you much longer now..."
+               1)  echo "Enter that code will you? I don't have all day...";;
+               2)  echo "You can do it! I believe in you!";;
+               3)  echo "Come on! Do it already!";;
+               4)  echo "Hey, that should be easy, a baby can do it!";;
+               5)  echo "How much help do you need? ENTER THE CODE: $user_code";;
+               6)  echo "I'm still waiting, having an issue with your browser?";;
+               7)  echo "Have you ever used a computer before?";;
+               8)  echo "I guess you forgot to install DUO...";;
+               9)  echo "I'm waiting for you....";;
+               10) echo "Hurry up mate!";;
+               11) echo "Seriously, what more do you need?";;
+               12) echo "You are making everything to make me loose my temper, aren't you?";;
+               13) echo "OK I can wait";;
+               14) echo "Ah ha, you think I care?";;
+               15) echo "No seriously! Why are you doing this to me?";;
+               16) echo "Please!!!! I beg you!! ENTER THE CODE!!! Free me!";;
+               17) echo "I see, you really don't care about my feelings...";;
+               18) echo "I don't care, I can wait, a lot longer than you.";;
+               *)  echo "I guess it shoud not take care you much longer now..."
           esac
       else
           break
@@ -113,11 +115,24 @@ poll () {
   done
 }
 
-poll $CLIENT_ID $CLIENT_SECRET $device_code 10 5
-echo "Finally!"
+poll $CLIENT_ID $CLIENT_SECRET $device_code 100 10
+
 echo
-echo -n "I can call SecureX API; here is your name: "
-http GET "$SX/iroh/profile/whoami" Authorization:"Bearer $access_token"|jq '.user["user-name"]'
-echo
-echo
+case $error in
+    authorization_pending) red "I waited too long..."; red "bye!" ; exit 0;;
+    access_denied) red "Seriously!!! How can you do that to me???!!"; red "I though we were friends!"; red "I will not forget that!"; exit 0 ;;
+    *) echo;;
+esac
+
+if (( ${+access_token} )); then
+  echo "Finally!"
+  echo
+  echo -n "I can call SecureX API now; here is your name: "
+  http GET "$SX/iroh/profile/whoami" Authorization:"Bearer $access_token"|jq '.user["user-name"]'
+  echo
+  echo
+else
+  red "I couldn't retrieve your access token :(";
+fi
+
 echo "The end of the demo"
