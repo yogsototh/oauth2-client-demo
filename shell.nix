@@ -7,7 +7,7 @@ in pkgs.mkShell {
     pkgs.python3Packages.httpserver
     pkgs.python3Packages.pyopenssl
     pkgs.httpie
-    pkgs.nodePackages.http-server
+    pkgs.lighttpd
   ];
   shellHook = ''
             alias pip="PIP_PREFIX='$(pwd)/_build/pip_packages' \pip"

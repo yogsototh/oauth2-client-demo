@@ -1,12 +1,14 @@
 /* Brutalist style CSS */
 html {
-    background:
-    repeating-linear-gradient(
-        45deg,
-        #002b36,
-        #002b36 10px,
-        #000b10 10px,
-        #000b10 20px ); }
+    // background:
+    // repeating-linear-gradient(
+    //     45deg,
+    //     hsl(18,70%,70%),
+    //     hsl(18,70%,70%) 10px,
+    //     hsl(18,70%,80%) 10px,
+    //     hsl(18,70%,80%) 20px );
+    background-color: hsl(218,20%,90%);
+}
 
 body {
     padding: 2em;
@@ -14,6 +16,9 @@ body {
     color: hsl(218,20%,25%);
     margin: 2em auto;
     max-width: 45em;
+    box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    border: solid 5px hsl(18,70%,60%);
     font-family: Helvetica Neue, sans-serif;
     font-weight: 300;
     line-height: 1.2em;
@@ -40,7 +45,7 @@ a > code {
     box-shadow: 4px 4px;
     padding: 5px;}
 
-nav > ul > li { line-height: 2em; font-size: 1.5em; font-weight: bold; }
+nav > ul > li > a { line-height: 2em; font-size: 1.5em; font-weight: bold; }
 
 code,pre {
     background-color: hsl(218,20%,90%);}
@@ -49,7 +54,10 @@ pre { padding: 1em;
       border: solid 2px;
       font-size: 0.7em;
       overflow: scroll; }
-label { font-weight: bold; display: block; margin-top: 1em; }
+label { font-weight: bold; display: block; margin-top: 1em;
+        color: #268bd2;
+      }
+label::before { content: "→ "; }
 
 a.button { text-decoration: none; }
 .button {

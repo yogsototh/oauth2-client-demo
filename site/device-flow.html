@@ -1,12 +1,29 @@
 <html>
     <head>
         <title>Device Grant Demo</title>
-        <link rel="stylesheet" href="brutalist.css" />
+        <link rel="stylesheet" href="brutalist.css">
     </head>
     <body>
+        <div id="overlay" style="color: #FFF; background: #F8F800; font-size: 3em; vertical-align: middle; text-align: center; width: 100%; height: 100%; padding: 0; margin: 0; border: none; position: fixed; top:0; left:0;"><div style="margin: auto; position: relative; top: 30%; font-weight: bold;">PROBABLY A BUG IN THE JS CODE</div></div>
+
         <h1>OAuth2 Device Grant Demo</h1>
 
-        <div id="errorBlock" style="display:none">
+        <p>From <a href="https://datatracker.ietf.org/doc/html/rfc8628" target="_blank">Device Grant RFC</a>:</p>
+
+          <p>
+            This OAuth 2.0 [RFC6749] protocol extension enables OAuth clients to
+            request user authorization from applications <strong>on devices that have
+            limited input capabilities or lack a suitable browser</strong>.  Such devices
+            include smart TVs, media consoles, picture frames, and printers,
+            which lack an easy input method or a suitable browser required for
+            traditional OAuth interactions.
+          </p>
+
+          <p>Suitable for clients with no <strong>single trusted public endpoint</strong>.</p>
+
+        <h2>Demo</h2>
+
+          <div id="errorBlock" style="display:none">
           <h2 id="errTitle"></h2>
           <p id="errMsg"></p>
         </div>
@@ -14,10 +31,8 @@
         <p>The first thing to do for the Client Application is to call
            the device authorization endpoint:
         </p>
-        <div id="overlay" style="color: #FFF; background: #F8F800; font-size: 3em; vertical-align: middle; text-align: center; width: 100%; height: 100%; padding: 0; margin: 0; border: none; position: fixed; top:0; left:0;"><div style="margin: auto; position: relative; top: 30%; font-weight: bold;">PROBABLY A BUG IN THE JS CODE</div></div>
-        <div id="deviceAuth"></div>
-
         <div id="genAuthBtn" class="button" onclick="genVerification()">Generate User Code</div>
+        <pre id="deviceAuth"></pre>
 
         <div id="verification_block" style="display:none">
           <h2>Received by the Device</h2>
@@ -46,18 +61,23 @@
           <pre id="retrieveMsg"></pre>
         </div>
 
+        <div id="success" style="display:none">
+          <h2>Device got the tokens</h2>
+          <button class="button" onclick="callWhoami()">Call <code>/whoami</code></button>
+          <pre id="whoamiResponse"></pre>
+        </div>
+
         <script>
           var SX="https://visibility.int.iroh.site";
           var deviceAuthURL=SX + "/iroh/oauth2/device_authorization";
           var tokenURL=SX + "/iroh/oauth2/token";
-          var resourceProviderTestEndpoint=SX + "/iroh/profile/whoami" ;
+          var whoamiURL=SX + "/iroh/profile/whoami" ;
 
           var CLIENT_ID="client-27d76a9a-3697-42f8-b492-2e21043afa92";
           var CLIENT_SECRET="Hkd4ihtMG2Ivr0gm7UPVgED2iyWFjNLjaC403TN7z11VKB5VyU25xg";
 
           var device_code=null;
 
-          document.getElementById('deviceAuth').innerHTML='<a href="' + deviceAuthURL + '" target="_blank">' + deviceAuthURL + '</a>';
           var postOpt={method: "POST"}
 
           function handleErrors(response) {
@@ -87,7 +107,8 @@
                        body: jsonToForm(body),
                        headers: {'Content-Type':
                                  'application/x-www-form-urlencoded;charset=UTF-8'}};
-              console.log(opt);
+
+              document.getElementById('deviceAuth').innerHTML=JSON.stringify(opt,null,2);
               fetch(deviceAuthURL, opt)
                   .then(handleErrors)
                   .then(response => response.json())
@@ -143,26 +164,46 @@
                       .then(handleTokenErrors)
                       .then(response => response.json())
                       .then(showRetrieved);
-                  ;
               } else {
                   document.getElementById('retrieveMsg').textContent="no device code";
               }
           }
 
+          var access_token=null;
+          var refresh_token=null;
           function showRetrieved(data) {
-              if (data.access_token) {
-                  var retrieveMsg=document.getElementById('retrieveMsg');
-                  retrieveMsg.className = 'success';
-                  retrieveMsg.innerHTML = JSON.stringify(data, null, 2);
-                  clearInterval(interval);
-                  // show access
-              } else {
-                  document.getElementById('retrieveMsg').html= JSON.stringify(data);
+              if (access_token == null) {
+                  if (data.access_token) {
+                      var retrieveMsg=document.getElementById('retrieveMsg');
+                      retrieveMsg.className = 'success';
+                      retrieveMsg.innerHTML = JSON.stringify(data, null, 2);
+                      clearInterval(interval);
+                      // show access
+                      showSuccess(data);
+                      access_token=data.access_token;
+                      refresh_token=data.refresh_token;
+                  } else {
+                      document.getElementById('retrieveMsg').html= JSON.stringify(data);
+                  }
               }
+          }
+
+          function showSuccess(data) {
+              document.getElementById('success').style.display = 'block';
           }
 
           function init(){
               document.getElementById('overlay').remove();
+          }
+          function callWhoami() {
+                  var opt={headers: {'Content-Type':
+                                     'application/x-www-form-urlencoded;charset=UTF-8',
+                                     'Authorization': 'Bearer ' + access_token}};
+
+                  fetch(whoamiURL, opt)
+                      .then(handleTokenErrors)
+                      .then(response => response.json())
+                      .then(data => document.getElementById('whoamiResponse').innerHTML=JSON.stringify(data,null,2));
           }
           init();
         </script>
