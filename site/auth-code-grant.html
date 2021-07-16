@@ -16,12 +16,26 @@
         </script>
     </head>
     <body>
-      <h1>IROH Auth OAuth2 Provider Demos</h1>
-      <nav>
-        <ul>
-          <li><a href="./auth-code-grant.html">Authorization Code Grant</a></li>
-          <li><a href="./device-flow.html">Device Grant</a></li>
-        </ul>
-      </nav>
+        <h1>IROH Auth: OAuth2 Authorization Code Grant Demo</h1>
+
+        <p>Start by creating a link to Authorize the Application to access your SecureX Account:</p>
+
+        <a id="authURLLink" class="button" href="#">Link to SecureX</a>
+
+        <p><strong>scopes</strong></p>
+        <ul id="scopes"></ul>
+
+        <p>The button is just a link to:</p>
+        <pre id="displayUrlPre"></pre>
+
+        <script>
+         $.when( $.ready ).then(function () {
+             $("#displayUrlPre").html(displayAuthUrl);
+             $("#authURLLink").attr("href",displayAuthUrl);
+             $.each(scopes,function(i,scope){
+                 $("#scopes").append("<li>"+scope+"</li>\n");
+             })
+         });
+        </script>
     </body>
 </html>

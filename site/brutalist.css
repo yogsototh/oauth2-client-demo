@@ -11,15 +11,25 @@ html {
 body {
     padding: 2em;
     display: block;
-    color: #586e75;
+    color: hsl(218,20%,25%);
     margin: 2em auto;
     max-width: 45em;
-    font-family: Consolas, Menlo, monospace;
+    font-family: Helvetica Neue, sans-serif;
+    font-weight: 300;
     line-height: 1.2em;
     font-size: 18px;
-    background-color: #fdf6e3; }
+    background-color: hsl(218,20%,97%); }
 
-strong { color: #657b83; }
+h1,h2,h3,h4,h5,h6 {
+    text-align: center;
+    font-size: 1.5em;
+    line-height: 1.2em; }
+h1::after,h1::before {
+  content: "===============================================";
+  display:block;
+}
+
+strong { hsl(218,20%,12%); }
 a { color: #268bd2;}
 a:visited { color: #6c71c4;  }
 a:hover { color: #cb4b16; }
@@ -30,14 +40,18 @@ a > code {
     box-shadow: 4px 4px;
     padding: 5px;}
 
+nav > ul > li { line-height: 2em; font-size: 1.5em; font-weight: bold; }
+
 code,pre {
-    background-color: #eee8d5;}
+    background-color: hsl(218,20%,90%);}
 
 pre { padding: 1em;
       border: solid 2px;
       font-size: 0.7em;
       overflow: scroll; }
+label { font-weight: bold; display: block; margin-top: 1em; }
 
+a.button { text-decoration: none; }
 .button {
     display: inline-block;
     border: solid 2px;
@@ -45,7 +59,7 @@ pre { padding: 1em;
     font-size: 22px;
     font-weight: bold;
     padding: 5px;
-    background-color: #eee8d5; }
+    background-color: hsl(218,20%,90%); }
 
 .button:hover {
     cursor: pointer;
@@ -72,3 +86,8 @@ pre { padding: 1em;
 
 .authorized {color: #859900;
              border: solid 8px; }
+#user_code { font-size: 3em; text-align: center; line-height: 1.2em; }
+#verification_block, #retrieval { border: solid; padding: 1em; margin: 1em 0; }
+#genAuthBtn { margin: 1em; }
+.error { background: #FDD; }
+.success { background: #DFD; }

@@ -1,0 +1,170 @@
+<html>
+    <head>
+        <title>Device Grant Demo</title>
+        <link rel="stylesheet" href="brutalist.css" />
+    </head>
+    <body>
+        <h1>OAuth2 Device Grant Demo</h1>
+
+        <div id="errorBlock" style="display:none">
+          <h2 id="errTitle"></h2>
+          <p id="errMsg"></p>
+        </div>
+
+        <p>The first thing to do for the Client Application is to call
+           the device authorization endpoint:
+        </p>
+        <div id="overlay" style="color: #FFF; background: #F8F800; font-size: 3em; vertical-align: middle; text-align: center; width: 100%; height: 100%; padding: 0; margin: 0; border: none; position: fixed; top:0; left:0;"><div style="margin: auto; position: relative; top: 30%; font-weight: bold;">PROBABLY A BUG IN THE JS CODE</div></div>
+        <div id="deviceAuth"></div>
+
+        <div id="genAuthBtn" class="button" onclick="genVerification()">Generate User Code</div>
+
+        <div id="verification_block" style="display:none">
+          <h2>Received by the Device</h2>
+
+          <label>User Code:</label>
+          <div id="user_code"></div>
+          <span class="small"><strong>MUST BE SHOWN TO THE USER NO MATTER WHAT FROM RFC</strong></span>
+          <label>Verification URI Complete</label>
+          <div id="verification_uri_complete"></div>
+          <span class="small">Preferred Link when possible</span>
+          <label>Verification URI</label>
+          <div id="verification_uri"></div>
+          <span class="small">If the user need to copy the link, you could also use a QR Code.</span>
+          <label>Device Code: </label><div id="device_code"></div>
+          <span class="small">This should never be disclosed to the user and be kept in the backend.</span>
+        </div>
+
+
+        <div id="retrieval" style="display:none">
+          <h2>Device Background Polling</h2>
+          <p>The device should wait for the user authorization.
+            To that end it will make a call every few seconds with both the
+            client credentials as well as the <code>device_code</code>.
+          </p>
+          <pre id="tokenrequest"></pre>
+          <pre id="retrieveMsg"></pre>
+        </div>
+
+        <script>
+          var SX="https://visibility.int.iroh.site";
+          var deviceAuthURL=SX + "/iroh/oauth2/device_authorization";
+          var tokenURL=SX + "/iroh/oauth2/token";
+          var resourceProviderTestEndpoint=SX + "/iroh/profile/whoami" ;
+
+          var CLIENT_ID="client-27d76a9a-3697-42f8-b492-2e21043afa92";
+          var CLIENT_SECRET="Hkd4ihtMG2Ivr0gm7UPVgED2iyWFjNLjaC403TN7z11VKB5VyU25xg";
+
+          var device_code=null;
+
+          document.getElementById('deviceAuth').innerHTML='<a href="' + deviceAuthURL + '" target="_blank">' + deviceAuthURL + '</a>';
+          var postOpt={method: "POST"}
+
+          function handleErrors(response) {
+              if (!response.ok) {
+                  response.json().then(err =>
+                      { console.log(err);
+                        document.getElementById('errorMsg').innerHTML = err.error + '<br/>' + err.error_description;
+                      }
+                      );
+              }
+              return response;
+          }
+          function jsonToForm (obj){
+              var formBody = [];
+              for (var property in obj) {
+                  var encodedKey = encodeURIComponent(property);
+                  var encodedValue = encodeURIComponent(obj[property]);
+                  formBody.push(encodedKey + "=" + encodedValue);
+              }
+              formBody = formBody.join("&");
+              return formBody;
+          }
+          function genVerification() {
+              var body={client_id: CLIENT_ID,
+                        client_secret: CLIENT_SECRET};
+              var opt={method: "POST",
+                       body: jsonToForm(body),
+                       headers: {'Content-Type':
+                                 'application/x-www-form-urlencoded;charset=UTF-8'}};
+              console.log(opt);
+              fetch(deviceAuthURL, opt)
+                  .then(handleErrors)
+                  .then(response => response.json())
+                  .then(showVerification);
+          }
+
+          function showVerification(resp){
+              console.log(resp);
+              device_code=resp.device_code;
+              document.getElementById('verification_block').style.display='block';
+              document.getElementById('user_code').innerHTML='<code>'+resp.user_code+'</code>';
+              document.getElementById('device_code').innerHTML='<code>' + resp.device_code + '</code>';
+              document.getElementById('verification_uri').innerHTML=
+                  '<a href="' + resp.verification_uri + '" target="_blank">' + resp.verification_uri + '</a>';
+              document.getElementById('verification_uri_complete').innerHTML=
+                  '<a href="' + resp.verification_uri_complete + '" target="_blank">' + resp.verification_uri_complete + '</a>';
+
+              startRetrieval();
+          }
+
+          var interval=null;
+          function startRetrieval() {
+              document.getElementById('retrieval').style.display='block';
+              interval = setInterval(retrieveTokens,3000);
+          }
+
+
+          function handleTokenErrors(response) {
+              if (!response.ok) {
+                  response.json().then(err =>
+                      {
+                          console.log(err);
+                          retrieveMsg=document.getElementById('retrieveMsg');
+                          retrieveMsg.className = 'error';
+                          retrieveMsg.innerHTML = JSON.stringify(err, null, 2); }
+                      );
+              }
+              return response;
+          }
+          function retrieveTokens(){
+              if (device_code) {
+                  var body={grant_type: "urn:ietf:params:oauth:grant-type:device_code",
+                            device_code: device_code};
+                  var opt={method: 'POST',
+                           body: jsonToForm(body),
+                           headers: {'Content-Type':
+                                     'application/x-www-form-urlencoded;charset=UTF-8',
+                                     'Authorization':
+                                     'Basic ' + btoa( CLIENT_ID + ':' + CLIENT_SECRET )}};
+
+                  document.getElementById('tokenrequest').innerHTML=JSON.stringify(opt,null,2);
+                  fetch(tokenURL, opt)
+                      .then(handleTokenErrors)
+                      .then(response => response.json())
+                      .then(showRetrieved);
+                  ;
+              } else {
+                  document.getElementById('retrieveMsg').textContent="no device code";
+              }
+          }
+
+          function showRetrieved(data) {
+              if (data.access_token) {
+                  var retrieveMsg=document.getElementById('retrieveMsg');
+                  retrieveMsg.className = 'success';
+                  retrieveMsg.innerHTML = JSON.stringify(data, null, 2);
+                  clearInterval(interval);
+                  // show access
+              } else {
+                  document.getElementById('retrieveMsg').html= JSON.stringify(data);
+              }
+          }
+
+          function init(){
+              document.getElementById('overlay').remove();
+          }
+          init();
+        </script>
+    </body>
+</html>
