@@ -43,27 +43,6 @@ switch (clientname) {
                    ];
             redirect_uri="http://localhost:5443/callback";
             break;
-      case "tgtest":
-            oauthURLPrefix="https://visibility.test.iroh.site";
-            response_type="code";
-            client_id="client-0da6e30d-9656-4c33-b511-dadbc1018f02";
-            client_password = "ZIGokk4ZuQkszTNy0B3LYfVc-NI5r0Nd_kFKoLZitVWeDU-5Wmx-mQ";
-            scopes=["casebook",
-                    "enrich:read",
-                    "global-intel:read",
-                    "inspect:read",
-                    "integration:read",
-                    "notification",
-                    "orbital",
-                    "profile",
-                    "private-intel",
-                    "response",
-                    "registry/user/ribbon",
-                    "telemetry:write",
-                    "users:read"
-                   ];
-            redirect_uri="http://localhost:5443/callback";
-            break;
       case "int-openid":
             oauthURLPrefix="https://visibility.int.iroh.site";
             response_type="code";
