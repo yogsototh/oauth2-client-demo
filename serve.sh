@@ -1,13 +1,15 @@
 #!/bin/bash
-
 set -e
-set -x
 
 cd "$(git rev-parse --show-toplevel)"
 
+PORT=5443
+
 > lighttpd.conf cat<<END
 server.document-root = "$PWD/site/"
-server.port = 3000
+server.port = $PORT
+ssl.engine = "enable"
+ssl.pemfile = "$PWD/cert/lighttpd.pem"
 mimetype.assign = (
   ".html" => "text/html; charset=utf8", 
   ".txt" => "text/plain; charset=utf8",
@@ -18,4 +20,7 @@ mimetype.assign = (
 index-file.names = ( "index.html" )
 END
 
+echo
+echo "Starting server: https://localhost:$PORT"
+echo
 lighttpd -D -f lighttpd.conf

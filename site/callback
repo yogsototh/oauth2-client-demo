@@ -11,7 +11,8 @@
         </script>
         <h1>Yolo App login page</h1>
         <p>Authorization process done!</p>
-        <a href="/index.html">← go back to main page</a>
+        <a href="/index.html">← Main</a>
+        <a href="/auth-code-grant.html">← Try Authorize flow again</a>
         <h2>Authorization Status</h2>
         <pre class="code" id="authorization_status"></pre>
         <div id="error-info"></div>
@@ -110,12 +111,24 @@
              $('#error-info').html("<p>You can have more informations here:</p><a href=\"" + erroruri + "\" target=\"_blank\">" + erroruri + "</a>");
          }
 
+          function safeParse (x) {
+              try {
+                  return JSON.parse(window.atob(x));
+              } catch (e) {
+                  return {"NOT_A_JWT":"NOT_A_JWT"};
+              }
+          }
+
          function jwtDecode(t) {
+           if (t) {
              let token = {};
              token.raw = t;
-             token.header = JSON.parse(window.atob(t.split('.')[0]));
-             token.payload = JSON.parse(window.atob(t.split('.')[1]));
-             return (token)
+             token.header = safeParse(t.split('.')[0]);
+             token.payload = safeParse(t.split('.')[1]);
+             return token;
+           } else {
+             return "n/a";
+           }
          }
          var jwt=jwtDecode(params.code).payload;
          $('#code-param').html(params.code);
