@@ -8,6 +8,7 @@ PORT=5443
 > lighttpd.conf cat<<END
 server.document-root = "$PWD/site/"
 server.port = $PORT
+server.modules = ( "mod_openssl" )
 ssl.engine = "enable"
 ssl.pemfile = "$PWD/cert/lighttpd.pem"
 mimetype.assign = (
