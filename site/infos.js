@@ -1,4 +1,4 @@
-var clientname="threatgrid-int";
+var clientname="amp-test";
 
 var redirect_uri="https://localhost:5443/callback";
 
@@ -76,6 +76,16 @@ switch (clientname) {
             client_password = "4vj7fvrt00ob2hsvcldceicgl1c9htpc";
             scopes=[ "openid", "threatgrid:profile" ];
             redirect_uri="https://visibility.test.iroh.site/iroh/iroh-auth/login/idb-tg-staging/answer";
+            break;
+      case "amp-test":
+            oauthURLPrefix="https://csaidb-int.test.security.cisco.com/oauth2/default/v1";
+            authorizeSuffix="/authorize";
+            tokenSuffix="/token"
+            response_type="code";
+            client_id="0oa2ovopagy06D2IV1d7";
+            client_password = "N7yEnBQWMHohD0LbwzXwsjuOUI9pVlbzI5lH28O9";
+            scopes=[ "openid", "profile", "email", "iroh_auth" ];
+            redirect_uri="https://visibility.test.iroh.site/iroh/iroh-auth/login/idb-amp-staging/answer";
             break;
       default:
             alert("OAuth2 Client Demo: I don't know your client (" + clientname + "). Change it in info.js.");
