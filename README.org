@@ -1,17 +1,27 @@
 #+Title: OAuth2 Client Demo
 #+Author: Yann Esposito
 
-Brutalist OAuth2 client demo.
+** Brutalist OAuth2 client demo.
 
-Brutalist because the design is brutalist and the site is static, no server side code.
+Brutalist because the design is brutalist and the site is static,
+no server side code.
 
-You can serve it with your preferred local file server.
-
+** Generate self certificate
 
 #+BEGIN_SRC
-python -m SimpleHTTPServer 9999
+cd cert/
+./gen-new-root-cert.sh
+... # follow the instructions
+./gen-new-cert.sh rootCA
+... # follow the instructions
+cat server.key server.crt > lighttpd.pem
 #+END_SRC
 
 
-Generate self certificate
+** Serve
 
+If you have nix installed, just use `nix-shell`, then
+
+#+BEGIN_SRC
+./serve-https.sh
+#+END_SRC
