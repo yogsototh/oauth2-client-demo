@@ -69,13 +69,15 @@
         </div>
 
         <script>
-          var SX="https://visibility.int.iroh.site";
+          var SX="https://visibility.test.iroh.site";
           var deviceAuthURL=SX + "/iroh/oauth2/device_authorization";
           var tokenURL=SX + "/iroh/oauth2/token";
           var whoamiURL=SX + "/iroh/profile/whoami" ;
 
-          var CLIENT_ID="client-27d76a9a-3697-42f8-b492-2e21043afa92";
-          var CLIENT_SECRET="Hkd4ihtMG2Ivr0gm7UPVgED2iyWFjNLjaC403TN7z11VKB5VyU25xg";
+          // var CLIENT_ID="client-27d76a9a-3697-42f8-b492-2e21043afa92";
+          // var CLIENT_SECRET="Hkd4ihtMG2Ivr0gm7UPVgED2iyWFjNLjaC403TN7z11VKB5VyU25xg";
+          var CLIENT_ID="client-8f221539-df0d-4377-a639-db7b9853ccee";
+          var CLIENT_SECRET=null;
 
           var device_code=null;
 
@@ -102,8 +104,13 @@
               return formBody;
           }
           function genVerification() {
-              var body={client_id: CLIENT_ID,
-                        client_secret: CLIENT_SECRET};
+              var body=null;
+              if (CLIENT_SECRET) {
+                body={client_id: CLIENT_ID,
+                      client_secret: CLIENT_SECRET};
+              } else {
+                body={client_id: CLIENT_ID};
+              }
               var opt={method: "POST",
                        body: jsonToForm(body),
                        headers: {'Content-Type':
@@ -133,7 +140,7 @@
           var interval=null;
           function startRetrieval() {
               document.getElementById('retrieval').style.display='block';
-              interval = setInterval(retrieveTokens,3000);
+              interval = setInterval(retrieveTokens,6000);
           }
 
 
@@ -153,12 +160,18 @@
               if (device_code) {
                   var body={grant_type: "urn:ietf:params:oauth:grant-type:device_code",
                             device_code: device_code};
+                  var basic=null;
+                  if (CLIENT_SECRET) {
+                     basic=btoa( CLIENT_ID + ':' + CLIENT_SECRET );
+                  } else {
+                     basic=btoa( CLIENT_ID );
+                  }
                   var opt={method: 'POST',
                            body: jsonToForm(body),
                            headers: {'Content-Type':
                                      'application/x-www-form-urlencoded;charset=UTF-8',
                                      'Authorization':
-                                     'Basic ' + btoa( CLIENT_ID + ':' + CLIENT_SECRET )}};
+                                     'Basic ' + basic}};
 
                   document.getElementById('tokenrequest').innerHTML=JSON.stringify(opt,null,2);
                   fetch(tokenURL, opt)
