@@ -3,6 +3,10 @@
         <meta charset="utf-8">
         <title>Device Grant Demo</title>
         <link rel="stylesheet" href="brutalist.css">
+        <style>
+          label:before { content:""; }
+          label { color: #444; font-size: 0.8em; display: inline-block; text-align: right; width: 20em;  }
+          </style>
     </head>
     <body>
         <div id="overlay" style="color: #FFF; background: #F8F800; font-size: 3em; vertical-align: middle; text-align: center; width: 100%; height: 100%; padding: 0; margin: 0; border: none; position: fixed; top:0; left:0;"><div style="margin: auto; position: relative; top: 30%; font-weight: bold;">PROBABLY A BUG IN THE JS CODE</div></div>
@@ -22,11 +26,39 @@
 
           <p>Suitable for clients with no <strong>single trusted public endpoint</strong>.</p>
 
+          <h2>Configuration</h2>
+          <label for="env">Select the Environment of your client:</label>
+          <select name="Environment" id="env" onchange="onEnvChange(this)">
+            <option value="https://visibility.int.iroh.site">
+              INT (https://visibility.int.iroh.site)</option>
+            <option value="https://visibility.test.iroh.site" selected>
+              TEST (https://visibility.test.iroh.site)</option>
+            <option value="https://visibility.amp.cisco.com">
+              PROD NAM (https://visibility.amp.cisco.com)</option>
+            <option value="https://visibility.eu.cisco.com">
+              PROD EU (https://visibility.eu.cisco.com)</option>
+            <option value="https://visibility.apjc.cisco.com">
+              PROD APJC (https://visibility.apjc.cisco.com)</option>
+          </select>
+
+          <label for="client_id">Client id:</label>
+          <input type="text" id="client_id" size="40"
+                 value="client-8f221539-df0d-4377-a639-db7b9853ccee"
+                 style="font-family: monospace"
+                 onchange="onClientIdChange(this)">
+
+          <label for="client_secret">Client secret:</label>
+          <input type="text" id="client_secret" size="40"
+                 value=""
+                 style="font-family: monospace"
+                 onchange="onClientSecretChange(this)">
+
+
         <h2>Demo</h2>
 
           <div id="errorBlock" style="display:none">
           <h2 id="errTitle"></h2>
-          <p id="errMsg"></p>
+          <div id="errMsg"></div>
         </div>
 
         <p>The first thing to do for the Client Application is to call
@@ -83,11 +115,42 @@
 
           var postOpt={method: "POST"}
 
+          function reset() {
+              document.getElementById('verification_block').style.display='none';
+              document.getElementById('retrieval').style.display='none';
+              document.getElementById('success').style.display='none';
+              document.getElementById('errorBlock').style.display = 'none';
+          }
+
+          function onEnvChange(selectObj) {
+              let value = selectObj.value;
+              SX=value;
+              deviceAuthURL=SX + "/iroh/oauth2/device_authorization";
+              tokenURL=SX + "/iroh/oauth2/token";
+              whoamiURL=SX + "/iroh/profile/whoami" ;
+              reset();
+          }
+
+          function onClientIdChange(selectObj) {
+              let value = selectObj.value;
+              CLIENT_ID=value;
+              reset();
+          }
+
+          function onClientSecretChange(selectObj) {
+              let value = selectObj.value;
+              CLIENT_SECRET=value;
+              reset();
+          }
+
           function handleErrors(response) {
               if (!response.ok) {
                   response.json().then(err =>
                       { console.log(err);
-                        document.getElementById('errorMsg').innerHTML = err.error + '<br/>' + err.error_description;
+                        var errMsg=document.getElementById('errMsg');
+                        errMsg.innerHTML = err.error + '<br/>' + err.error_description;
+                        var errBlock=document.getElementById('errorBlock');
+                        errBlock.style.display = 'block';
                       }
                       );
               }

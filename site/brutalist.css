@@ -9,13 +9,14 @@ html {
     //     hsl(18,70%,80%) 20px );
     background-color: hsl(218,20%,90%);
 }
+* { box-sizing: border-box; }
 
 body {
     padding: 2em;
     display: block;
     color: hsl(218,20%,25%);
     margin: 2em auto;
-    max-width: 45em;
+    max-width: 49em;
     box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
     border-radius: 4px;
     border: solid 5px hsl(18,70%,60%);
@@ -99,3 +100,4 @@ a.button { text-decoration: none; }
 #genAuthBtn { margin: 1em; }
 .error { background: #FDD; }
 .success { background: #DFD; }
+#errMsg { background: #A00; color: #FFF; font-weight: bold; font-family: monospace; border: solid 3px #800; }
