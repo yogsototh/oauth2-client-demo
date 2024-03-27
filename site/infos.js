@@ -1,4 +1,7 @@
-var clients = [ "int-openid",
+var clients = [
+  "meraki-TEST",
+  "meraki-NAM",
+  "int-openid",
   "int-posture",
   "localtest",
   "AMPDevice",
@@ -40,6 +43,50 @@ function selectClient(clientname) {
                   client_password = "localpass";
                   scopes=["profile"];
                   redirect_uri="http://localhost:3001/callback";
+                  break;
+            case "meraki-TEST":
+                  oauthURLPrefix="https://visibility.test.iroh.site";
+                  response_type="code";
+                  client_id="000000000000-0000-0000-1606271552";
+                  client_password = "Uknown";
+                  scopes=[
+                    "integration"
+                    , "private-intel"
+                    , "admin"
+                    , "profile"
+                    , "inspect"
+                    , "event"
+                    , "vault/config"
+                    , "registry"
+                    , "investigation"
+                    , "telemetry:write"
+                    , "enrich"
+                    , "response"
+                    , "notification"
+                    , "vault/configs" ];
+                  redirect_uri="http://localhost:5443/callback";
+                  break;
+            case "meraki-NAM":
+                  oauthURLPrefix="https://visibility.amp.cisco.com";
+                  response_type="code";
+                  client_id="000000000000-0000-0000-1606271552";
+                  client_password = "Uknown";
+                  scopes=[
+                    "integration"
+                    , "private-intel"
+                    , "admin"
+                    , "profile"
+                    , "inspect"
+                    , "event"
+                    , "vault/config"
+                    , "registry"
+                    , "investigation"
+                    , "telemetry:write"
+                    , "enrich"
+                    , "response"
+                    , "notification"
+                    , "vault/configs" ];
+                  redirect_uri="http://localhost:5443/callback";
                   break;
             case "partial-test":
                   oauthURLPrefix="https://visibility.int.iroh.site";
