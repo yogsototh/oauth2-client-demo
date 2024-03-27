@@ -64,7 +64,9 @@ function selectClient(clientname) {
                     , "response"
                     , "notification"
                     , "vault/configs" ];
-                  redirect_uri="http://localhost:5443/callback";
+                  redirect_uri= "https://n1.meraki.com/xdr_redirect/authorize_complete";
+            // "http://localhost:5443/callback";
+
                   break;
             case "meraki-NAM":
                   oauthURLPrefix="https://visibility.amp.cisco.com";
