@@ -1,4 +1,6 @@
-let pkgs = import <nixpkgs> {};
+let 
+  nixpkgs = fetchTarball "https://github.com/NixOS/nixpkgs/archive/50999ee5859bfe2a5f811eed11cd16df355b86a2.tar.gz";
+  pkgs = import nixpkgs { config = {}; overlays = []; };
  #     nanomsg-py = .... build expression for this python library;
 in pkgs.mkShell {
   buildInputs = [
