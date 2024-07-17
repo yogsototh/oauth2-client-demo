@@ -1,18 +1,21 @@
 var clients = [
-  "meraki-TEST",
-  "meraki-NAM",
+  "AMPDevice",
+  "amp-test",
   "int-openid",
   "int-posture",
   "localtest",
-  "AMPDevice",
+  "meraki-NAM",
+  "meraki-TEST",
   "partial-test",
+  "test-env",
   "threatgrid-int",
-  "threatgrid-test",
-  "amp-test" ];
+  "threatgrid-test"
+];
 
 var redirect_uri="https://localhost:5443/callback";
-var oauthURLPrefix="https://visibility.int.iroh.site";
+var oauthURLPrefix="https://visibility.test.iroh.site";
 var response_type="code";
+var selectedClient=null;
 var client_id=null;
 var client_password=null;
 var scopes=[];
@@ -36,6 +39,30 @@ function selectClient(clientname) {
       switch (clientname) {
             case "AMPDevice":
                   oauthURLPrefix="https://visibility.test.iroh.site";
+                  break;
+            case "test-env":
+                  oauthURLPrefix="https://visibility.test.iroh.site";
+                  response_type="code";
+                  client_id="client-ad5850ae-238f-4581-b9b5-ff2db042b803";
+                  client_password = "yolo";
+                  scopes= [ "private-intel",
+                    "admin",
+                    "profile",
+                    "inspect",
+                    "integration:read",
+                    "users",
+                    "casebook",
+                    "orbital",
+                    "enrich",
+                    "integration/module-instance",
+                    "response",
+                    "telemetry:write",
+                    "notification",
+                    "registry/user/ribbon",
+                    "global-intel:read"
+                  ];
+                  redirect_uri="http://localhost:5443/callback";
+                  break;
             case "localtest":
                   oauthURLPrefix="http://localhost:9001";
                   response_type="code";
@@ -163,7 +190,8 @@ function selectClient(clientname) {
       oauthServerTokenUrl=oauthURLPrefix + tokenSuffix;
       resourceProviderTestEndpoint=oauthURLPrefix + "/iroh/profile/whoami" ;
       scope=scopes.join(" ");
+      selectedClient=clientname;
       state="whatever=";
 }
 
-selectClient("int-openid");
+selectClient("test-env");

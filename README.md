@@ -12,6 +12,15 @@ If you don't want to use sws, you can use python 3.
 python server.py
 ```
 
+Or if you use `nix`
+
+```
+nix-shell
+./serve-https.sh
+```
+
+Then open <https://localhost:5443>
+
 ## Utility scripts
 
 Modify `scripts/get_refresh_token` to retrieve a refresh/access token from the CTR API. 
