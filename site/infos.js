@@ -69,7 +69,7 @@ function selectClient(clientname) {
                   client_id="localtest";
                   client_password = "localpass";
                   scopes=["profile"];
-                  redirect_uri="http://localhost:3001/callback";
+                  redirect_uri="http://localhost:5443/callback";
                   break;
             case "meraki-TEST":
                   oauthURLPrefix="https://visibility.test.iroh.site";
@@ -194,4 +194,4 @@ function selectClient(clientname) {
       state="whatever=";
 }
 
-selectClient("test-env");
+(function () { selectClient("localtest"); })();

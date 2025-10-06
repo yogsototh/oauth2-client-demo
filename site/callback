@@ -7,8 +7,6 @@
         <script src="./infos.js"></script>
     </head>
     <body>
-        <script>
-        </script>
         <h1>Yolo App login page</h1>
         <p>Authorization process done!</p>
         <a href="/index.html">← Main</a>
